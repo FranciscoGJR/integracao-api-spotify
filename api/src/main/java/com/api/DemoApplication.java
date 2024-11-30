@@ -31,6 +31,8 @@ public class DemoApplication {
 	private static void preencherGenero(ArrayList<Musica> listaDeMusicas) {
 		
 		Spotify api = new Spotify();
+
+		System.out.print(api.consultaGenero(""));
 	}		
 
 
