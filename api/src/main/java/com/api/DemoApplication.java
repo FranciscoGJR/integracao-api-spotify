@@ -1,7 +1,7 @@
 package com.api;
 
 import com.api.model.Musica;
-import com.api.request.Spotify;
+import com.api.service.Spotify;
 
 import java.util.ArrayList;
 
@@ -11,13 +11,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DemoApplication {
 
+
 	public static void main(String[] args) {
 
 		SpringApplication.run(DemoApplication.class, args);
 
 		ArrayList<Musica> listaDeMusicas = getMusicas();
 
-		mostrarRelacaoDeGenero(listaDeMusicas);
 
 		System.out.print(listaDeMusicas.toString());
 	}
@@ -39,20 +39,17 @@ public class DemoApplication {
 		
 		Spotify api = new Spotify();
 
-		listaDeMusicas = api.getMusicas();	}		
-	}
+		listaDeMusicas = api.getListaDeMusicas();
+
+		preencherGeneroDasMusicas(listaDeMusicas);
+	}		
 
 
 	private static void preencherGeneroDasMusicas(ArrayList<Musica> listaDeMusicas){
 		
 		Spotify api = new Spotify();
 
-		listaDeMusicas = api.getGenero();
-	}
-
-
-	private static void mostrarRelacaoDeGenero(ArrayList<Musica> listaDeMusicas) {
-
+		String genero = api.getGenero("idArtista");
 	}
 
 }
