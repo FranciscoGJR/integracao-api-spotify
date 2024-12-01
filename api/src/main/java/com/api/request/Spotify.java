@@ -1,8 +1,11 @@
 package com.api.request;
 
+import com.api.model.Musica;
+
 import java.io.IOException;
 import java.net.URI;
 
+import java.util.ArrayList;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -14,7 +17,14 @@ public class Spotify {
 
 	private final String accessToken = "";
 
-	public String consultaGenero(String idArtista) {
+
+	public ArrayList<Musica> getMusicas() {
+
+		return new ArrayList<Musica>();
+	}
+
+
+	public String getGenero(String idArtista) {
 
 	        String url = BASE_URL + idArtista;
 
@@ -34,7 +44,7 @@ public class Spotify {
 			System.err.println("Erro inesperado: " + e.getMessage());
 		}
 
-		return "";
+		return "Gênero não encontrado";
 	}
 
 }

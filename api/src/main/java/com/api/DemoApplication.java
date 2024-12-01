@@ -39,14 +39,15 @@ public class DemoApplication {
 		
 		Spotify api = new Spotify();
 
-		System.out.print(api.consultaGenero(""));
-	}		
+		listaDeMusicas = api.getMusicas();	}		
+	}
+
 
 	private static void preencherGeneroDasMusicas(ArrayList<Musica> listaDeMusicas){
 		
 		Spotify api = new Spotify();
 
-		System.out.print(api.consultaGenero(""));
+		listaDeMusicas = api.getGenero();
 	}
 
 
