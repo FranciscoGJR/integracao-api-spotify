@@ -12,10 +12,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Spotify {
 
@@ -29,9 +33,7 @@ public class Spotify {
 	}
 
 
-	public String getListaDeMusicas() {
-
-		List<Musica> listaDeMusicas = new ArrayList<>();
+	public List<Musica> getListaDeMusicas() {
 
 	       	var url = URL_API_SPOTIFY_CHARTS + PATH_CITY;
 
@@ -43,24 +45,77 @@ public class Spotify {
                 	.header("Content-Type", "application/json")
                 	.GET()
          		.build();
-		
+
+		String jsonString = new String();
+
 		try {
 			var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-
 			if (response.statusCode() != 200) {
 				System.err.println( horarioAtual() + " - Error ao solicitar api: " + url);
-				return "Error";
+				return null;
 			}
 
-			return response.body();
+			List<Musica> listaDeMusicas = preencherLista(response.body());
+
+			return listaDeMusicas;
 
 		} catch (Exception e) {
 			System.err.println("Erro inesperado: " + e.getMessage());
 		}
 
-		return "Não encontrado";
+		return null;
+
 	}
+
+
+	public List<Musica> preencherLista(String jsonString) {
+
+		List<Musica> listaDeMusicas = new ArrayList<>();
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		try {
+
+			JsonNode root = mapper.readTree(jsonString);
+			JsonNode entriesNode = root.path("entries");
+
+			int popularidade = 1;
+			for (JsonNode entryNode : entriesNode) {
+				
+				JsonNode jsonTrackMetadataNode = entryNode.path("trackMetadata");
+				JsonNode jsonPrimeiroArtista = jsonTrackMetadataNode.path("artists").get(0);
+
+				Musica musica = new Musica(
+					jsonTrackMetadataNode.path("trackName").asText(),
+					jsonPrimeiroArtista.path("name").asText(),
+					getId(jsonPrimeiroArtista.path("spotifyUri").asText()),
+					popularidade
+					);
+
+				listaDeMusicas.add(musica);
+
+				popularidade++;
+			}
+
+		} catch (Exception e) {
+			System.err.println("Erro ao serializar dados da lista de músicas");
+		}
+
+		return listaDeMusicas;
+	}
+
+
+    	public static String getId(String uri) {
+		int lastColonIndex = uri.lastIndexOf(":");
+
+		if (lastColonIndex != -1) {            
+			return uri.substring(lastColonIndex + 1);
+		}
+		
+		return ""; 
+	}
+	
 
 
 	public String getGenero(String idArtista) {

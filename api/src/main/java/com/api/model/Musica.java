@@ -1,13 +1,38 @@
 package com.api.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 public class Musica {
 
-	String titulo;
+	public String titulo;
 
-	String nomeArtista;
+	public String nomeArtista;
 
-	String idArtista;
+	public String idArtista;
 
-	String genero;
+	public String genero;
+
+	public Integer popularidade;
+
+
+	public String getTitulo() {
+		return this.titulo;
+	}
+
+
+	public Musica(String titulo, String nomeArtista, String idArtista, Integer popularidade) {
+		this.titulo = titulo;
+		this.nomeArtista = nomeArtista;
+		this.idArtista = idArtista;
+		this.popularidade = popularidade;
+	}
+
+
+	public String toString() {
+		return this.titulo + " - " +
+			this.nomeArtista + " - " +
+			this.idArtista + " - " +
+			this.popularidade;
+	}
 
 }
