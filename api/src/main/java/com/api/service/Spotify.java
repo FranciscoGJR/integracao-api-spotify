@@ -17,7 +17,11 @@ import java.net.http.HttpResponse;
 
 public class Spotify {
 
-	private static final String BASE_URL = "https://api.spotify.com/v1/artists/";
+	private static final String URL_API_SPOTIFY = "https://api.spotify.com/v1/artists/";
+
+	private static final String URL_API_SPOTIFY_CHARTS = "https://charts-spotify-com-service.spotify.com/auth/v0/charts/";
+
+	private static final String PATH_CITY = "citytoptrack-belem-weekly/2024-11-28";
 
 	private final String accessToken = "";
 
@@ -31,17 +35,11 @@ public class Spotify {
 	}
 
 
-	public List<Musica> getListaDeMusicas() {
+	public String getListaDeMusicas() {
 
 		List<Musica> listaDeMusicas = new ArrayList<>();
 
-		return listaDeMusicas;
-	}
-
-
-	public String getGenero(String idArtista) {
-
-	       	var url = BASE_URL + idArtista;
+	       	var url = URL_API_SPOTIFY_CHARTS + PATH_CITY;
 
         	var httpClient = HttpClient.newHttpClient();
 
@@ -53,12 +51,44 @@ public class Spotify {
          		.build();
 		
 		try {
-		var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+			var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-		if (response.statusCode() != 200) {
-			System.err.println( horarioAtual() + " - Error ao solicitar api externa");
-			return "Inválido";
+
+			if (response.statusCode() != 200) {
+				System.err.println( horarioAtual() + " - Error ao solicitar api externa");
+				return "Error";
+			}
+
+			return response.body();
+
+		} catch (Exception e) {
+			System.err.println("Erro inesperado: " + e.getMessage());
 		}
+
+		return "Não encontrado";
+	}
+
+
+	public String getGenero(String idArtista) {
+
+	       	var url = URL_API_SPOTIFY + idArtista;
+
+        	var httpClient = HttpClient.newHttpClient();
+
+        	var request = HttpRequest.newBuilder()
+                	.uri(URI.create(url))
+                	.header("Authorization", "Bearer " + accessToken)
+                	.header("Content-Type", "application/json")
+                	.GET()
+         		.build();
+		
+		try {
+			var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+			if (response.statusCode() != 200) {
+				System.err.println( horarioAtual() + " - Error ao solicitar api externa");
+				return "Inválido";
+			}
 
 			return response.body();
 

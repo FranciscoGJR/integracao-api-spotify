@@ -46,7 +46,7 @@ public class DemoApplication {
 		
 		Spotify api = new Spotify();
 
-		listaDeMusicas = api.getListaDeMusicas();
+		System.out.println(api.getListaDeMusicas());
 
 		preencherGeneroDasMusicas(listaDeMusicas);
 	}		
