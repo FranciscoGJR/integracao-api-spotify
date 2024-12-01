@@ -1,5 +1,7 @@
 package com.api;
 
+import static com.api.Constantes.*;
+
 import com.api.model.Musica;
 import com.api.service.Spotify;
 
@@ -56,7 +58,7 @@ public class DemoApplication {
 		
 		Spotify api = new Spotify();
 
-		String genero = api.getGenero("idArtista");
+		String genero = api.getGenero(ID_ARTISTA_EXEMPLO);
 	}
 
 }

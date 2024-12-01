@@ -1,5 +1,7 @@
 package com.api.service;
 
+import static com.api.Constantes.*;
+
 import com.api.model.Musica;
 
 import java.io.IOException;
@@ -16,14 +18,6 @@ import java.net.http.HttpResponse;
 
 
 public class Spotify {
-
-	private static final String URL_API_SPOTIFY = "https://api.spotify.com/v1/artists/";
-
-	private static final String URL_API_SPOTIFY_CHARTS = "https://charts-spotify-com-service.spotify.com/auth/v0/charts/";
-
-	private static final String PATH_CITY = "citytoptrack-belem-weekly/2024-11-28";
-
-	private final String accessToken = "";
 
 	private LocalDateTime time;
 	private DateTimeFormatter formatador;
@@ -45,7 +39,7 @@ public class Spotify {
 
         	var request = HttpRequest.newBuilder()
                 	.uri(URI.create(url))
-                	.header("Authorization", "Bearer " + accessToken)
+                	.header("Authorization", "Bearer " + ACCESS_TOKEN)
                 	.header("Content-Type", "application/json")
                 	.GET()
          		.build();
@@ -55,7 +49,7 @@ public class Spotify {
 
 
 			if (response.statusCode() != 200) {
-				System.err.println( horarioAtual() + " - Error ao solicitar api externa");
+				System.err.println( horarioAtual() + " - Error ao solicitar api: " + url);
 				return "Error";
 			}
 
@@ -77,7 +71,7 @@ public class Spotify {
 
         	var request = HttpRequest.newBuilder()
                 	.uri(URI.create(url))
-                	.header("Authorization", "Bearer " + accessToken)
+                	.header("Authorization", "Bearer " + ACCESS_TOKEN)
                 	.header("Content-Type", "application/json")
                 	.GET()
          		.build();
@@ -86,7 +80,7 @@ public class Spotify {
 			var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
 			if (response.statusCode() != 200) {
-				System.err.println( horarioAtual() + " - Error ao solicitar api externa");
+				System.err.println( horarioAtual() + " - Error ao solicitar api: " + url);
 				return "Inválido";
 			}
 
