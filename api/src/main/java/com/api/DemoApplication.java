@@ -1,7 +1,7 @@
 package com.api;
 
 import com.api.model.Musica;
-import com.api.request.Spotify;
+import com.api.service.Spotify;
 
 import java.util.ArrayList;
 
