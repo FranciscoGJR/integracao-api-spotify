@@ -1,7 +1,6 @@
 package com.api;
 
 import com.api.model.Musica;
-import com.api.data.Input;
 import com.api.request.Spotify;
 
 import java.util.ArrayList;
@@ -16,11 +15,7 @@ public class DemoApplication {
 
 		SpringApplication.run(DemoApplication.class, args);
 
-		Input input = new Input();
-
-		ArrayList<Musica> listaDeMusicas = input.getMusicas();
-
-		preencherGenero(listaDeMusicas);
+		ArrayList<Musica> listaDeMusicas = getMusicas();
 
 		mostrarRelacaoDeGenero(listaDeMusicas);
 
@@ -28,12 +23,31 @@ public class DemoApplication {
 	}
 
 
-	private static void preencherGenero(ArrayList<Musica> listaDeMusicas) {
+	public static ArrayList<Musica> getMusicas() {
+
+		ArrayList<Musica> listaDeMusicas = new ArrayList<>();
+		
+		preencherListaDeMusicas(listaDeMusicas);
+
+		preencherGeneroDasMusicas(listaDeMusicas);
+
+		return listaDeMusicas;
+	}
+
+
+	private static void preencherListaDeMusicas(ArrayList<Musica> listaDeMusicas) {
 		
 		Spotify api = new Spotify();
 
 		System.out.print(api.consultaGenero(""));
 	}		
+
+	private static void preencherGeneroDasMusicas(ArrayList<Musica> listaDeMusicas){
+		
+		Spotify api = new Spotify();
+
+		System.out.print(api.consultaGenero(""));
+	}
 
 
 	private static void mostrarRelacaoDeGenero(ArrayList<Musica> listaDeMusicas) {
