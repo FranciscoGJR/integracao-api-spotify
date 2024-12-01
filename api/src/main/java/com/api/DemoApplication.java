@@ -4,26 +4,33 @@ import com.api.model.Musica;
 import com.api.service.Spotify;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class DemoApplication {
+	
+	private final Spotify spotify;
+
+
+	public DemoApplication() {
+		this.spotify = new Spotify();
+	}
 
 
 	public static void main(String[] args) {
 
 		SpringApplication.run(DemoApplication.class, args);
 
-		ArrayList<Musica> listaDeMusicas = getMusicas();
-
+		List<Musica> listaDeMusicas = getMusicas();
 
 		System.out.print(listaDeMusicas.toString());
 	}
 
 
-	public static ArrayList<Musica> getMusicas() {
+	public static List<Musica> getMusicas() {
 
 		ArrayList<Musica> listaDeMusicas = new ArrayList<>();
 		
@@ -35,7 +42,7 @@ public class DemoApplication {
 	}
 
 
-	private static void preencherListaDeMusicas(ArrayList<Musica> listaDeMusicas) {
+	private static void preencherListaDeMusicas(List<Musica> listaDeMusicas) {
 		
 		Spotify api = new Spotify();
 
@@ -45,7 +52,7 @@ public class DemoApplication {
 	}		
 
 
-	private static void preencherGeneroDasMusicas(ArrayList<Musica> listaDeMusicas){
+	private static void preencherGeneroDasMusicas(List<Musica> listaDeMusicas){
 		
 		Spotify api = new Spotify();
 

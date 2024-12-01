@@ -8,6 +8,7 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -30,9 +31,9 @@ public class Spotify {
 	}
 
 
-	public ArrayList<Musica> getListaDeMusicas() {
+	public List<Musica> getListaDeMusicas() {
 
-		ArrayList<Musica> listaDeMusicas = new ArrayList<>();
+		List<Musica> listaDeMusicas = new ArrayList<>();
 
 		return listaDeMusicas;
 	}
