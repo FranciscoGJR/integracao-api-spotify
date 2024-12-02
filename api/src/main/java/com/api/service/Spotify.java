@@ -35,7 +35,7 @@ public class Spotify {
 
 	public List<Musica> getListaDeMusicas() {
 
-	       	var url = URL_API_SPOTIFY_CHARTS + PATH_CITY;
+	       	var url = URL_API_SPOTIFY_CHARTS + PATH_CITY + WEEKLY;
 
         	var httpClient = HttpClient.newHttpClient();
 

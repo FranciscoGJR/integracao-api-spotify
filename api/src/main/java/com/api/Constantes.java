@@ -1,13 +1,13 @@
 package com.api;
 
 public class Constantes {
-	public static String ACCESS_TOKEN = "BQBuFhcrj7yGasweoqAuCTpkEzpN9hIxZgNUWODI_33FVmTqZlu3KHmdVfnheAkxBGvy_e4QjtcgrCDd8J9X1EOfFABDmioIWDJmQqMt6v2bi_Ip0ORsESLREwCdn7w8_UgL8opEk2tc4SCD8wboxA5zLx7ijQzLXVecn9biFYJyWwiJXDmWivufRQKQsbp3r_vaz0coX2rmOgrFEIltcItY-WFF5KPu";
-
+	public static String ACCESS_TOKEN = "BQBRmIb1rVi9oUxEJKmRwHa2wImwWGSRsppRooP3elMP6b22OND0yBAIo2tXmS5-YEbU62BFHYnwy33UR1LYfOdqF1VrxvkYaSd1LVTWeFCKgptjJi8J0HTGrCorCRxLIrskMEa4TcWrmf6_vPWKJpChW8KvEg1VNOZ5B6pBiSM7jNqjzhK-3m796Q7P8uztuZ32oqMjyFd7DXg2B-hVkA1ON-Nsh2Lx";
+	
 	public static final String URL_API_SPOTIFY = "https://api.spotify.com/v1/artists/";
 
 	public static final String URL_API_SPOTIFY_CHARTS = "https://charts-spotify-com-service.spotify.com/auth/v0/charts/";
 
-	public static final String PATH_CITY = "citytoptrack-belem-weekly/2024-11-28";
+	public static final String PATH_CITY = "citytoptrack-salvador-weekly/";
 
-	public static final String ID_ARTISTA_EXEMPLO = "0TnOYISbd1XYRBk9myaseg";
+	public static final String WEEKLY = "2024-11-28";
 }
