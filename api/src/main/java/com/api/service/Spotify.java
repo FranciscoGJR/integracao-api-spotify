@@ -99,7 +99,7 @@ public class Spotify {
 			}
 
 		} catch (Exception e) {
-			System.err.println("Erro ao serializar dados da lista de músicas");
+			System.err.println("Música sem gênero registrado");
 		}
 
 		return listaDeMusicas;
@@ -117,7 +117,6 @@ public class Spotify {
 	}
 	
 
-
 	public String getGenero(String idArtista) {
 
 	       	var url = URL_API_SPOTIFY + idArtista;
@@ -130,22 +129,41 @@ public class Spotify {
                 	.header("Content-Type", "application/json")
                 	.GET()
          		.build();
-		
+
+		String jsonString = new String();
+
 		try {
 			var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
 			if (response.statusCode() != 200) {
 				System.err.println( horarioAtual() + " - Error ao solicitar api: " + url);
-				return "Inválido";
+				return null;
 			}
-
-			return response.body();
+			
+			return serializarGenero(response.body());
 
 		} catch (Exception e) {
 			System.err.println("Erro inesperado: " + e.getMessage());
 		}
 
 		return "Não encontrado";
+	}
+
+
+	private String serializarGenero(String jsonString) {
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		try {
+
+			JsonNode root = mapper.readTree(jsonString);
+			JsonNode genresNode = root.path("genres");
+
+			return genresNode.get(0).asText();
+
+		} catch (Exception e) {
+			return "";
+		}
 	}
 
 

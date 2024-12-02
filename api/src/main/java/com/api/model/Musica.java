@@ -15,24 +15,37 @@ public class Musica {
 	public Integer popularidade;
 
 
-	public String getTitulo() {
-		return this.titulo;
-	}
-
-
 	public Musica(String titulo, String nomeArtista, String idArtista, Integer popularidade) {
 		this.titulo = titulo;
 		this.nomeArtista = nomeArtista;
 		this.idArtista = idArtista;
 		this.popularidade = popularidade;
+		this.genero = new String();
+	}
+
+
+	public String getTitulo() {
+		return this.titulo;
+	}
+
+
+	public String getIdArtista() {
+		return this.idArtista;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
 	}
 
 
 	public String toString() {
-		return this.titulo + " - " +
+		return "( " +
+			this.titulo + " - " +
 			this.nomeArtista + " - " +
 			this.idArtista + " - " +
-			this.popularidade;
+			this.popularidade + " - " +
+			this.genero +
+			" )";
 	}
 
 }

@@ -28,7 +28,6 @@ public class DemoApplication {
 
 		List<Musica> listaDeMusicas = getMusicas();
 
-		System.out.print(listaDeMusicas.toString());
 	}
 
 
@@ -38,8 +37,7 @@ public class DemoApplication {
 		
 		preencherListaDeMusicas(listaDeMusicas);
 
-		preencherGeneroDasMusicas(listaDeMusicas);
-
+		System.out.println("\nPos preencher lista: " + listaDeMusicas.toString());
 		return listaDeMusicas;
 	}
 
@@ -48,7 +46,9 @@ public class DemoApplication {
 		
 		Spotify api = new Spotify();
 
-		listaDeMusicas = api.getListaDeMusicas();
+		List<Musica> novasMusicas = api.getListaDeMusicas();
+
+		listaDeMusicas.addAll(novasMusicas);
 
 		preencherGeneroDasMusicas(listaDeMusicas);
 	}		
@@ -58,7 +58,13 @@ public class DemoApplication {
 		
 		Spotify api = new Spotify();
 
-		String genero = api.getGenero(ID_ARTISTA_EXEMPLO);
-	}
+		for (Musica musica : listaDeMusicas) {
+			
+			String genero = api.getGenero(musica.getIdArtista());
 
+			musica.setGenero(genero);
+			
+			System.out.println(musica.toString());
+		}
+	}
 }
