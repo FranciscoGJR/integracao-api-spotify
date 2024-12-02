@@ -6,6 +6,7 @@ import com.api.model.Musica;
 import com.api.service.Spotify;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.boot.SpringApplication;
@@ -28,6 +29,25 @@ public class DemoApplication {
 
 		List<Musica> listaDeMusicas = getMusicas();
 
+		montarClassificacao(listaDeMusicas);
+
+	}
+
+
+	private static void montarClassificacao(List<Musica> listaDeMusicas) {
+    		HashMap<String, Integer> placar = new HashMap<>();
+
+		int classificacaoDoGenero = 0;
+		for (Musica musica : listaDeMusicas) {
+			String genero = musica.getGenero();
+
+			if (genero.equals("") || placar.containsKey(genero)){
+				continue;
+			}
+
+			placar.put(genero, classificacaoDoGenero++);
+			System.out.println(classificacaoDoGenero + " " + genero);
+		}
 	}
 
 
@@ -37,7 +57,6 @@ public class DemoApplication {
 		
 		preencherListaDeMusicas(listaDeMusicas);
 
-		System.out.println("\nPos preencher lista: " + listaDeMusicas.toString());
 		return listaDeMusicas;
 	}
 

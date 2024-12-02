@@ -159,11 +159,19 @@ public class Spotify {
 			JsonNode root = mapper.readTree(jsonString);
 			JsonNode genresNode = root.path("genres");
 
-			return genresNode.get(0).asText();
+			String genero = genresNode.get(0).asText();
+
+			return formatarGenero(genero);
 
 		} catch (Exception e) {
 			return "";
 		}
+	}
+
+
+	private String formatarGenero(String genero) {
+		char primeiraLetra = Character.toUpperCase(genero.charAt(0));
+		return primeiraLetra + genero.substring(1);
 	}
 
 

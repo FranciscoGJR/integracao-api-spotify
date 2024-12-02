@@ -33,6 +33,10 @@ public class Musica {
 		return this.idArtista;
 	}
 
+	public String getGenero() {
+		return this.genero;
+	}
+
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
