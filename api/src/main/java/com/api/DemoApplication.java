@@ -37,16 +37,22 @@ public class DemoApplication {
 	private static void montarClassificacao(List<Musica> listaDeMusicas) {
     		HashMap<String, Integer> placar = new HashMap<>();
 
-		int classificacaoDoGenero = 0;
+			int classificacaoDoGenero = 0;
+
 		for (Musica musica : listaDeMusicas) {
-			String genero = musica.getGenero();
+			
+			List<String> generos = musica.getGeneros();
+			classificacaoDoGenero++;
 
-			if (genero.equals("") || placar.containsKey(genero)){
-				continue;
+			for (String genero : generos) {
+				
+				if (genero.equals("") || placar.containsKey(genero)){
+					continue;
+				}
+
+				placar.put(genero, classificacaoDoGenero);
+				System.out.println(classificacaoDoGenero + " " + genero);
 			}
-
-			placar.put(genero, classificacaoDoGenero++);
-			System.out.println(classificacaoDoGenero + " " + genero);
 		}
 	}
 
@@ -79,9 +85,9 @@ public class DemoApplication {
 
 		for (Musica musica : listaDeMusicas) {
 			
-			String genero = api.getGenero(musica.getIdArtista());
+			List<String> generos = api.getGeneros(musica.getIdArtista());
 
-			musica.setGenero(genero);
+			musica.setGeneros(generos);
 			
 			System.out.println(musica.toString());
 		}
