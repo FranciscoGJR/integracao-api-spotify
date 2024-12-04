@@ -6,8 +6,13 @@ import com.api.model.Musica;
 import com.api.service.Spotify;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.List;
+import java.util.Scanner;
+
+import java.io.FileWriter;
+import java.io.IOException;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,13 +34,43 @@ public class DemoApplication {
 
 		List<Musica> listaDeMusicas = getMusicas();
 
-		montarClassificacao(listaDeMusicas);
+		LinkedHashMap<String, Integer> classificacao = montarClassificacao(listaDeMusicas);
+
+		criaCsvClassificacao(classificacao, MES, ANO, CIDADE);
 
 	}
 
+	private static void criaCsvClassificacao(LinkedHashMap<String, Integer> classificacao, String mes, String ano, String cidade) {
+		
+		String nomeArquivo = cidade + "-" + mes + "-" + ano + ".csv";
+		
+		try (FileWriter writer = new FileWriter(nomeArquivo)){
+			// Escreve o cabeçalho
+			writer.append("genre,rank,month,year,city\n");
 
-	private static void montarClassificacao(List<Musica> listaDeMusicas) {
-    		HashMap<String, Integer> placar = new HashMap<>();
+			// Adiciona as linhas no CSV
+			for (Map.Entry<String, Integer> entry : classificacao.entrySet()) {
+				writer.append(entry.getKey())
+					  .append(",")
+					  .append(entry.getValue().toString())
+					  .append(",")
+					  .append(mes)
+					  .append(",")
+					  .append(ano)
+					  .append(",")
+					  .append(cidade)
+					  .append("\n");
+			}
+
+			System.out.println("Arquivo CSV criado com sucesso: " + nomeArquivo);
+		} catch (Exception e) {
+			System.err.println("Erro ao criar o arquivo CSV: " + e.getMessage());
+		}
+	}
+
+
+	private static LinkedHashMap<String, Integer> montarClassificacao(List<Musica> listaDeMusicas) {
+    		LinkedHashMap<String, Integer> placar = new LinkedHashMap<>();
 
 			int classificacaoDoGenero = 0;
 
@@ -54,6 +89,8 @@ public class DemoApplication {
 				System.out.println(classificacaoDoGenero + " " + genero);
 			}
 		}
+
+		return placar; 
 	}
 
 
