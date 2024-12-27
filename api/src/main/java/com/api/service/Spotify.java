@@ -53,7 +53,7 @@ public class Spotify {
 
 			if (response.statusCode() != 200) {
 				System.err.println( horarioAtual() + " - Error ao solicitar api: " + url);
-				return null;
+				return new ArrayList<>();
 			}
 
 			List<Musica> listaDeMusicas = preencherLista(response.body());
@@ -64,7 +64,7 @@ public class Spotify {
 			System.err.println("Erro inesperado: " + e.getMessage());
 		}
 
-		return null;
+		return new ArrayList<>();
 
 	}
 
@@ -117,7 +117,7 @@ public class Spotify {
 	}
 	
 
-	public String getGenero(String idArtista) {
+	public List<String> getGeneros(String idArtista) {
 
 	       	var url = URL_API_SPOTIFY + idArtista;
 
@@ -130,42 +130,46 @@ public class Spotify {
                 	.GET()
          		.build();
 
-		String jsonString = new String();
-
 		try {
 			var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
 			if (response.statusCode() != 200) {
 				System.err.println( horarioAtual() + " - Error ao solicitar api: " + url);
-				return null;
+				return new ArrayList<>();
 			}
 			
 			return serializarGenero(response.body());
 
 		} catch (Exception e) {
 			System.err.println("Erro inesperado: " + e.getMessage());
+			return new ArrayList<>();
 		}
 
-		return "Não encontrado";
 	}
 
 
-	private String serializarGenero(String jsonString) {
+	private List<String> serializarGenero(String jsonString) {
 
 		ObjectMapper mapper = new ObjectMapper();
+		List<String> genresList = new ArrayList<>();
 
 		try {
 
 			JsonNode root = mapper.readTree(jsonString);
 			JsonNode genresNode = root.path("genres");
 
-			String genero = genresNode.get(0).asText();
-
-			return formatarGenero(genero);
+			if (genresNode.isArray()) {
+				//StringBuilder generos = new StringBuilder();
+				for (JsonNode genreNode : genresNode) {
+					genresList.add(genreNode.asText());
+				}
+			}
 
 		} catch (Exception e) {
-			return "";
+			return new ArrayList<>();
 		}
+
+		return genresList;
 	}
 
 

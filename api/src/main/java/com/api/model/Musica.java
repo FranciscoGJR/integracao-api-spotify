@@ -1,5 +1,8 @@
 package com.api.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 public class Musica {
@@ -10,7 +13,7 @@ public class Musica {
 
 	public String idArtista;
 
-	public String genero;
+	public List<String> generos;
 
 	public Integer popularidade;
 
@@ -20,7 +23,7 @@ public class Musica {
 		this.nomeArtista = nomeArtista;
 		this.idArtista = idArtista;
 		this.popularidade = popularidade;
-		this.genero = new String();
+		this.generos = new ArrayList<String>();
 	}
 
 
@@ -33,12 +36,12 @@ public class Musica {
 		return this.idArtista;
 	}
 
-	public String getGenero() {
-		return this.genero;
+	public List<String> getGeneros() {
+		return this.generos;
 	}
 
-	public void setGenero(String genero) {
-		this.genero = genero;
+	public void setGeneros(List<String> generos) {
+		this.generos = generos;
 	}
 
 
@@ -48,7 +51,7 @@ public class Musica {
 			this.nomeArtista + " - " +
 			this.idArtista + " - " +
 			this.popularidade + " - " +
-			this.genero +
+			this.generos +
 			" )";
 	}
 
